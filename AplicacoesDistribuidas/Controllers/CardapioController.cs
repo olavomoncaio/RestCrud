@@ -57,5 +57,17 @@ namespace AplicacoesDistribuidas.Controllers
                 return new ObjectResult(resultado) { StatusCode = StatusCodes.Status200OK };
             });
         }
+
+        [HttpGet("ObterItem")]
+        public async Task<IActionResult> ObterItem([FromQuery] int id)
+        {
+            return await TratarResultadoAsync(async () =>
+            {
+                var resultado = await _cardapioService.ObterItem(id);
+
+                return new ObjectResult(resultado) { StatusCode = StatusCodes.Status200OK };
+            });
+        }
+
     }
 }

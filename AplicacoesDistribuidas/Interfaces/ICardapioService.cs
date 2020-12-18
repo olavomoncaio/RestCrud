@@ -12,5 +12,7 @@ namespace AplicacoesDistribuidas.Interfaces
         Task<BaseResponse> ObterCardapio();
 
         Task<BaseResponse> Excluir(int id);
+
+        Task<BaseResponse> ObterItem(int id);
     }
 }

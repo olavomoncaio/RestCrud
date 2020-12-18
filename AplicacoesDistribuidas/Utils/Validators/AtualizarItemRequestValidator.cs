@@ -7,7 +7,7 @@ namespace AplicacoesDistribuidas.Utils.Validators
     {
         public AtualizarItemRequestValidator()
         {
-            RuleFor(x => x.Id).NotEmpty().WithMessage("É necessário informar o Id do Item.")
+            RuleFor(x => x.CardapioId).NotEmpty().WithMessage("É necessário informar o Id do Item.")
                 .GreaterThan(0).WithMessage("O Id do Projeto deve ser maior que 0");
 
             RuleFor(x => x.Nome).NotEmpty().WithMessage("É necessário informar o Nome");

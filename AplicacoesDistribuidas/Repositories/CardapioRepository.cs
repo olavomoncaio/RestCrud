@@ -20,7 +20,8 @@ namespace AplicacoesDistribuidas.Repositories
                                 CardapioId,
                                 Nome,
                                 Valor,
-                                Disponivel
+                                Disponivel,
+                                Ingredientes
                             FROM CARDAPIO";
 
             using (var con = new MySqlConnection(ObterConexao))
@@ -33,14 +34,14 @@ namespace AplicacoesDistribuidas.Repositories
         public async Task Cadastrar(CadastrarItemRequest request)
         {
             string query = @"INSERT INTO CARDAPIO 
-                                (Nome, Valor, Disponivel) 
+                                (Nome, Valor, Disponivel, Ingredientes) 
                              VALUES 
-                                (@Nome, @Valor, @Disponivel)";
+                                (@Nome, @Valor, @Disponivel, @Ingredientes)";
 
             using (var con = new MySqlConnection(ObterConexao))
             {
                 await con.OpenAsync();
-                await con.ExecuteAsync(query, new { request.Nome, request.Disponivel, request.Valor } );
+                await con.ExecuteAsync(query, new { request.Nome, request.Disponivel, request.Valor, request.Ingredientes } );
             }
         }
 
@@ -50,14 +51,22 @@ namespace AplicacoesDistribuidas.Repositories
                              SET
                                 Nome = @Nome,
                                 Valor = @Valor,
-                                Disponivel = @Disponivel
+                                Disponivel = @Disponivel,
+                                Ingredientes = @Ingredientes
                              WHERE 
-                                CardapioId = @Id";
+                                CardapioId = @CardapioId";
 
             using (var con = new MySqlConnection(ObterConexao))
             {
                 await con.OpenAsync();
-                await con.ExecuteAsync(query, new { request.Nome, request.Id, request.Disponivel, request.Valor });
+                await con.ExecuteAsync(query, new 
+                { 
+                    request.Nome, 
+                    request.CardapioId, 
+                    request.Disponivel, 
+                    request.Valor,
+                    request.Ingredientes
+                });
             }
         }
 
@@ -70,6 +79,25 @@ namespace AplicacoesDistribuidas.Repositories
             {
                 await con.OpenAsync();
                 await con.ExecuteAsync(query, new { Id = id });
+            }
+        }
+
+        public async Task<ItemCardapio> ObterItem(int id)
+        {
+            string query = @"SELECT  
+                                CardapioId,
+                                Nome,
+                                Valor,
+                                Disponivel,
+                                Ingredientes
+                            FROM CARDAPIO
+                            WHERE
+                                CardapioId = @Id";
+
+            using (var con = new MySqlConnection(ObterConexao))
+            {
+                await con.OpenAsync();
+                return await con.QueryFirstOrDefaultAsync<ItemCardapio>(query, new { Id = id});
             }
         }
     }

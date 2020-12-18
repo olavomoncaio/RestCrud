@@ -13,5 +13,7 @@ namespace AplicacoesDistribuidas.Interfaces
         Task Atualizar(AtualizarItemRequest request);
 
         Task Excluir(int id);
+
+        Task<ItemCardapio> ObterItem(int id);
     }
 }

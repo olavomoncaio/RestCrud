@@ -19,14 +19,14 @@ namespace AplicacoesDistribuidas.Services
         {
             await _cardapioRepository.Cadastrar(request);
 
-            return new BaseResponse { StatusCode = StatusCodes.Status200OK, Mensagem = $"Item criado com sucesso!"};
+            return new BaseResponse { StatusCode = StatusCodes.Status200OK, Mensagem = "Item criado com sucesso!"};
         }
 
         public async Task<BaseResponse> Atualizar(AtualizarItemRequest request)
         {
             await _cardapioRepository.Atualizar(request);
 
-            return new BaseResponse { StatusCode = StatusCodes.Status200OK, Mensagem = $"Item atualizado com sucesso!" };
+            return new BaseResponse { StatusCode = StatusCodes.Status200OK, Mensagem = "Item atualizado com sucesso!" };
         }
 
         public async Task<BaseResponse> ObterCardapio()
@@ -40,7 +40,14 @@ namespace AplicacoesDistribuidas.Services
         {
             await _cardapioRepository.Excluir(id);
 
-            return new BaseResponse { StatusCode = StatusCodes.Status200OK, Mensagem = $"Item excluido com sucesso!" };
+            return new BaseResponse { StatusCode = StatusCodes.Status200OK, Mensagem = "Item excluido com sucesso!" };
+        }
+
+        public async Task<BaseResponse> ObterItem(int id)
+        {
+            var item = await _cardapioRepository.ObterItem(id);
+
+            return new ObterItemResponse() { Item = item, StatusCode = StatusCodes.Status200OK, Mensagem = "Cardápio Obtido!" };
         }
     }
 }
